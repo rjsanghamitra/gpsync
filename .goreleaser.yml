@@ -4,3 +4,127 @@ builds:
       - linux
     goarch:
       - amd64
+snapcrafts:
+  -
+    id: foo
+
+    builds:
+    - foo
+    - bar
+
+    
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+    name: gpsync
+
+    publish: true
+
+    summary: CLI application to create a backup of Google Photos in your local system.
+
+    description: This is a command line application written in golang that creates a backup of Google Photos in your local system.
+
+    channel_templates:
+      - edge
+      - beta
+      - candidate
+      - stable
+      - '{{ .Major }}.{{ .Minor }}/edge'
+      - '{{ .Major }}.{{ .Minor }}/beta'
+      - '{{ .Major }}.{{ .Minor }}/candidate'
+      - '{{ .Major }}.{{ .Minor }}/stable'
+
+    grade: stable
+
+    confinement: strict
+
+    license: MIT
+
+    base: core18
+
+    extra_files:
+      - source: gpsync.wrapper
+        destination: bin/gpsync.wrapper
+        mode: 0755
+
+    layout:
+      /etc/gpsync:
+
+        bind: $SNAP_DATA/etc
+
+    apps:
+
+      gpsync:
+
+        args: --path
+
+        adapter: none
+
+        after: ["postdrum"]
+
+        aliases: ["gpb"]
+
+        autostart: gpsync.desktop
+
+        before: ["predrum"]
+
+        bus_name: gpbus
+
+        command_chain: ["foo", "bar", "baz"]
+
+        common_id: ""
+
+        completer: ""
+
+        command: ""
+
+        daemon: simple
+
+        desktop: usr/share/applications/gpsync.desktop
+
+        environment:
+          foo: bar
+          baz: quo
+
+        extensions: ["gnome-3-38"]
+
+        install_mode: "disable"
+
+        passthrough:
+          foo: bar
+
+        plugs: ["home", "network", "personal-files"]
+
+        post_stop_command: foo
+
+        refresh_mode: endure
+
+        reload_command: foo
+
+        restart_condition: "always"
+
+        slots: ["foo", "bar", "baz"]
+
+        sockets:
+          sock:
+            listen-stream: $SNAP_COMMON/socket
+            socket-group: socket-group
+            socket-mode: 416
+
+        start_timeout: 42ms
+
+        stop_command: foo
+
+        stop_mode: sigterm
+
+        stop_timeout: 42ms
+
+        timer: "00:00-24:00/24"
+        watchdog_timeout: 42ms
+
+    plugs:
+      personal-files:
+        read:
+        - $HOME/.foo
+        write:
+        - $HOME/.foo
+        - $HOME/.foobar

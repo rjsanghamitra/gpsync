@@ -4,127 +4,199 @@ builds:
       - linux
     goarch:
       - amd64
-snapcrafts:
+nfpms:
   -
     id: foo
 
+    package_name: gpsync
+
+    file_name_template: "{{ .ConventionalFileName }}"
+
     builds:
-    - foo
-    - bar
+      - foo
+      - bar
 
-    
-    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    vendor: ""
 
-    name: gpsync
+    homepage: https://github.com/rjsanghamitra/gpsync/
 
-    publish: true
+    maintainer: Sanghamitra <rjsanghamitra@gmail.com>
 
-    summary: CLI application to create a backup of Google Photos in your local system.
-
-    description: This is a command line application written in golang that creates a backup of Google Photos in your local system.
-
-    channel_templates:
-      - edge
-      - beta
-      - candidate
-      - stable
-      - '{{ .Major }}.{{ .Minor }}/edge'
-      - '{{ .Major }}.{{ .Minor }}/beta'
-      - '{{ .Major }}.{{ .Minor }}/candidate'
-      - '{{ .Major }}.{{ .Minor }}/stable'
-
-    grade: stable
-
-    confinement: strict
+    description: |-
+      This is a command line tool that creates a backup of Google Photos in your local system.
 
     license: MIT
 
-    base: core18
+    formats:
+      - apk
+      - deb
+      - rpm
+      - termux.deb # Since GoReleaser v1.11.
+      - archlinux  # Since GoReleaser v1.13.
 
-    extra_files:
-      - source: gpsync.wrapper
-        destination: bin/gpsync.wrapper
-        mode: 0755
+    dependencies:
+      - git
+      - zsh
 
-    layout:
-      /etc/gpsync:
+    provides:
+      - bar
 
-        bind: $SNAP_DATA/etc
+    recommends:
+      - bzr
+      - gtk
 
-    apps:
+    suggests:
+      - cvs
+      - ksh
 
-      gpsync:
+    conflicts:
+      - svn
+      - bash
 
-        args: --path
+    replaces:
+      - fish
 
-        adapter: none
+    bindir: /usr/bin
 
-        after: ["postdrum"]
+    epoch: 2
 
-        aliases: ["gpb"]
+    prerelease: beta1
 
-        autostart: gpsync.desktop
+    version_metadata: git
 
-        before: ["predrum"]
+    release: 1
 
-        bus_name: gpbus
+    section: default
 
-        command_chain: ["foo", "bar", "baz"]
+    priority: extra
 
-        common_id: ""
+    meta: true
 
-        completer: ""
+    changelog: ./foo.yml
 
-        command: ""
+    contents:
+      - src: path/to/foo
+        dst: /usr/bin/foo
 
-        daemon: simple
+      - src: path/to/foo.conf
+        dst: /etc/foo.conf
+        type: config
 
-        desktop: usr/share/applications/gpsync.desktop
+      - src: /sbin/foo
+        dst: /usr/bin/foo
+        type: "symlink"
 
-        environment:
-          foo: bar
-          baz: quo
+      - src: path/to/local/bar.conf
+        dst: /etc/bar.conf
+        type: "config|noreplace"
 
-        extensions: ["gnome-3-38"]
+      - src: path/{{ .Os }}-{{ .Arch }}/bar.conf
+        dst: /etc/foo/bar-{{ .ProjectName }}.conf
 
-        install_mode: "disable"
+      - dst: /etc/casper.conf
+        type: ghost
+      - dst: /var/log/boo.log
+        type: ghost
 
-        passthrough:
-          foo: bar
+      - src: path/to/rpm/file.conf
+        dst: /etc/file.conf
+        type: "config|noreplace"
+        packager: rpm
+      - src: path/to/deb/file.conf
+        dst: /etc/file.conf
+        type: "config|noreplace"
+        packager: deb
+      - src: path/to/apk/file.conf
+        dst: /etc/file.conf
+        type: "config|noreplace"
+        packager: apk
 
-        plugs: ["home", "network", "personal-files"]
+      - src: path/to/foo
+        dst: /usr/local/foo
+        file_info:
+          mode: 0644
+          mtime: 2008-01-02T15:04:05Z
+          owner: notRoot
+          group: notRoot
 
-        post_stop_command: foo
+      - src: ./foo/bar/*
+        dst: /usr/local/myapp/
 
-        refresh_mode: endure
+      - dst: /some/dir
+        type: dir
+        file_info:
+          mode: 0700
 
-        reload_command: foo
+    scripts:
+      preinstall: "scripts/preinstall.sh"
+      postinstall: "scripts/postinstall.sh"
+      preremove: "scripts/preremove.sh"
+      postremove: "scripts/postremove.sh"
 
-        restart_condition: "always"
+    overrides:
+      deb:
+        depends:
+          - baz (>= 1.2.3-0)
+          - some-lib-dev
+      rpm:
+        depends:
+          - baz >= 1.2.3-0
+          - some-lib-devel
+      apk:
 
-        slots: ["foo", "bar", "baz"]
+    rpm:
+      scripts:
+        pretrans: ./scripts/pretrans.sh
+        posttrans: ./scripts/posttrans.sh
 
-        sockets:
-          sock:
-            listen-stream: $SNAP_COMMON/socket
-            socket-group: socket-group
-            socket-mode: 416
+      summary: Explicit Summary for Sample Package
 
-        start_timeout: 42ms
+      group: Unspecified
+      packager: GoReleaser <staff@goreleaser.com>
 
-        stop_command: foo
+      compression: lzma
 
-        stop_mode: sigterm
+      signature:
+        key_file: '{{ .Env.GPG_KEY_PATH }}'
 
-        stop_timeout: 42ms
+    deb:
+      lintian_overrides:
+        - statically-linked-binary
+        - changelog-file-missing-in-native-package
 
-        timer: "00:00-24:00/24"
-        watchdog_timeout: 42ms
+      scripts:
+        rules: foo.sh
+        templates: templates
 
-    plugs:
-      personal-files:
-        read:
-        - $HOME/.foo
-        write:
-        - $HOME/.foo
-        - $HOME/.foobar
+      triggers:
+        interest:
+          - some-trigger-name
+        activate:
+          - another-trigger-name
+
+      breaks:
+        - some-package
+
+      signature:
+        key_file: '{{ .Env.GPG_KEY_PATH }}'
+
+        type: origin
+
+    apk:
+      scripts:
+        preupgrade: ./scripts/preupgrade.sh
+        postupgrade: ./scripts/postupgrade.sh
+
+      signature:
+        key_file: '{{ .Env.GPG_KEY_PATH }}'
+
+        key_name: origin
+
+    archlinux:
+      scripts:
+        preupgrade: ./scripts/preupgrade.sh
+        postupgrade: ./scripts/postupgrade.sh
+
+      pkgbase: foo
+
+      packager: GoReleaser <staff@goreleaser.com>

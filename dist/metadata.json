@@ -1,1 +1,1 @@
-{"project_name":"gpsync","tag":"v1.0.0","previous_tag":"","version":"1.0.0","commit":"b8395d51add3026802c74bec0e4edaf47be4de04","date":"2023-01-21T22:26:34.957422209+05:30","runtime":{"goos":"linux","goarch":"amd64"}}
+{"project_name":"gpsync","tag":"v1.0","previous_tag":"","version":"1.0","commit":"9f81290c4897eab24ffda4b3a5bd0c9e0d3c8730","date":"2023-01-21T22:27:56.539102598+05:30","runtime":{"goos":"linux","goarch":"amd64"}}

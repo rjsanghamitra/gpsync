@@ -1,0 +1,1 @@
+8da3457ddf81aee7f089c0919aa074bcd3a54faa0e8070b31f28c9a4e52bf210  gpsync_1.0.0_linux_amd64.tar.gz

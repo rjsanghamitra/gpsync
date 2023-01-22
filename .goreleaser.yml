@@ -1,6 +1,0 @@
-builds:
-  - binary: gpsync
-    goos:
-      - linux
-    goarch:
-      - amd64

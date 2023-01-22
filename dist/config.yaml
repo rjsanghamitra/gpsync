@@ -15,8 +15,12 @@ builds:
   - id: gpsync
     goos:
       - linux
+      - windows
+      - darwin
     goarch:
       - amd64
+      - arm64
+      - "386"
     goarm:
       - "6"
     gomips:
@@ -25,6 +29,13 @@ builds:
       - v1
     targets:
       - linux_amd64_v1
+      - linux_arm64
+      - linux_386
+      - windows_amd64_v1
+      - windows_arm64
+      - windows_386
+      - darwin_amd64_v1
+      - darwin_arm64
     dir: .
     main: .
     binary: gpsync
@@ -33,9 +44,17 @@ builds:
     command: build
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser
+    env:
+      - CGO_ENABLED=0
 archives:
   - id: default
     name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ with .Arm }}v{{ . }}{{ end }}{{ with .Mips }}_{{ . }}{{ end }}{{ if not (eq .Amd64 "v1") }}{{ .Amd64 }}{{ end }}'
+    replacements:
+      "386": i386
+      amd64: x86_64
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
     format: tar.gz
     files:
       - src: license*
@@ -45,15 +64,25 @@ archives:
       - src: changelog*
       - src: CHANGELOG*
 snapshot:
-  name_template: '{{ .Version }}-SNAPSHOT-{{ .ShortCommit }}'
+  name_template: '{{ incpatch .Version }}-next'
 checksum:
-  name_template: '{{ .ProjectName }}_{{ .Version }}_checksums.txt'
+  name_template: checksums.txt
   algorithm: sha256
+changelog:
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+  sort: asc
 dist: dist
 env_files:
   github_token: ~/.config/goreleaser/github_token
   gitlab_token: ~/.config/goreleaser/gitlab_token
   gitea_token: ~/.config/goreleaser/gitea_token
+before:
+  hooks:
+    - go mod tidy
+    - go generate ./...
 source:
   name_template: '{{ .ProjectName }}-{{ .Version }}'
   format: tar.gz

@@ -8,6 +8,7 @@
 * c631435 modified .goreleaser.yaml
 * 0dfcc44 modified .goreleaser.yaml
 * c1b81be modified .goreleaser.yml
-* cce66bb modified .goreleaser.yml
 * c95a8ae modified .goreleaser.yml
+* cce66bb modified .goreleaser.yml
+* 74d0d07 modified .goreleaser.yml
 * 7e50dce modified .goreleaser.yml file

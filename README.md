@@ -4,7 +4,7 @@ This is a tool written in Golang that creates a backup of Google Photos in your 
 
 Create a Google OAuth Web Client ID. Download the json file and store it in your home directory.
 
-## You can follow the steps in this webpage to create a Google OAuth Client ID 
+You can follow the steps in this webpage to create a Google OAuth Client ID 
 https://support.google.com/workspacemigrate/answer/9222992?hl=en
 
 Download this

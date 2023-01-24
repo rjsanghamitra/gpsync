@@ -1,11 +1,13 @@
-This is a tool written in Golang that creates a backup of Google Photos in your local system. It uses Goroutines to download album photos.
+This is a tool written in Golang that creates a backup of Google Photos in your local system. 
+It uses Goroutines to download Album Photos.
+It does not create duplicates of photos.
+It does not creates symlinks of photos in Album Photos if they already exist in Library Photos.
 
 # How to use?
-
 Create a Google OAuth Web Client ID. Download the json file and store it in your home directory.
 
 You can follow the steps in this webpage to create a Google OAuth Client ID 
-https://support.google.com/workspacemigrate/answer/9222992?hl=en
+https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid
 
 Download this
 https://github.com/rjsanghamitra/gpsync/releases/download/v1.0.0/gpsync_1.0.0_Linux_x86_64.tar.gz

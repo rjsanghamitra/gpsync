@@ -15,3 +15,5 @@ Extract the file contents and open terminal in that directory.
 Run the following command:
 `./gpsync --path <path>`
 You can specify the path where you want to store the photos as a command line argument.
+
+**Disclaimer:** Since this tool uses Google Photos API, which is known to be slightly buggy, it might not download all the photos in your account. 

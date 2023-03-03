@@ -1,7 +1,7 @@
 This is a tool written in Golang that creates a backup of Google Photos in your local system. 
 - It uses Goroutines to download Album Photos.
 - It does not create duplicates of photos.
-- It does not creates symlinks of photos in Album Photos if they already exist in Library Photos.
+- It creates symlinks of photos in Album Photos if they already exist in Library Photos.
 
 # How to use?
 Create a Google OAuth Web Client ID. Download the json file and store it in your home directory as "client_secret.json".

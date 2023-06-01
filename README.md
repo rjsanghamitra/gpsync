@@ -9,11 +9,14 @@ Create a Google OAuth Web Client ID. Download the json file and store it in your
 You can follow the steps in this webpage to create a Google OAuth Client ID 
 https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid
 
-Download this
-https://github.com/rjsanghamitra/gpsync/releases/download/v1.0.0/gpsync_1.0.0_Linux_x86_64.tar.gz
-Extract the file contents and open terminal in that directory.
-Run the following command:
-`./gpsync --path <path>`
+Clone this repo:
+`git clone https://github.com/rjsanghamitra/gpsync.git`
+
+Run the command to create the binary:
+`go install gpsync`
+
+Run the following command to download the photos:
+`gpsync --path <path>`
 You can specify the path where you want to store the photos as a command line argument.
 
-**Disclaimer:** Since this tool uses Google Photos API, which is known to be slightly buggy, it might not download all the photos in your account. 
+**Disclaimer:** Since this tool uses the Google Photos API, which is known to be slightly buggy, it might not download all the photos in your account. 

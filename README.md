@@ -12,7 +12,7 @@ https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid
 Clone this repo:
 `git clone https://github.com/rjsanghamitra/gpsync.git`
 
-Run the command to create the binary:
+Run this command to create the binary:
 `go install gpsync`
 
 Run the following command to download the photos:
